@@ -1,6 +1,8 @@
 # knn.py
 # Completed by:
 import csv
+from collections import Counter
+from math import sqrt
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -31,25 +33,27 @@ def read_fish_CSV(file_path: Path, species: str = "") -> list[Fish]:
 
 # Find the euclidean distance between two fish based on their length1, length2, length3, height, and width
 def distance(fish1: Fish, fish2: Fish) -> float:
-    # YOUR CODE HERE
-    pass
+    return sqrt((fish1.length1 - fish2.length1) ** 2
+                + (fish1.length2 - fish2.length2) ** 2
+                + (fish1.length3 - fish2.length3) ** 2
+                + (fish1.height - fish2.height) ** 2
+                + (fish1.width - fish2.width) ** 2)
 
 # Find the k nearest neighbors of a given fish based on the distance function
 def nearest(k: int, fish: Fish, all_fish: list[Fish]) -> list[Fish]:
-    # YOUR CODE HERE
-    pass
+    return sorted(all_fish, key=lambda other: distance(fish, other))[:k]
 
 # Classify a fish based on the k nearest neighbors
 # Choose the fish species with the most neighbors and return it
 def classify(k: int, fish: Fish, all_fish: list[Fish]) -> str:
-    # YOUR CODE HERE
-    pass
+    counts = Counter(f.species for f in nearest(k, fish, all_fish))
+    return counts.most_common(1)[0][0]
 
 # Predict the weight of a fish based on the k nearest neighbors
 # Choose the average (mean) weight of the neighbors and return it
 def predict(k: int, fish: Fish, all_fish: list[Fish]) -> float:
-    # YOUR CODE HERE
-    pass
+    neighbors = nearest(k, fish, all_fish)
+    return sum(f.weight for f in neighbors) / len(neighbors)
 
 # Plot the fish data with matplotlib by height and width, showing a different color
 # for each species
