@@ -1,5 +1,6 @@
 # knn.py
-# Completed by:
+# Completed by: 
+
 import csv
 from collections import Counter
 from math import sqrt
