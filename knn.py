@@ -1,5 +1,5 @@
 # knn.py
-# Completed by: 
+# Completed by: Harris Adam
 
 import csv
 from collections import Counter
